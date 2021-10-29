@@ -1,0 +1,11 @@
+.todoItem {
+  padding: 2px;
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+}
+
+.crudButton {
+  border: 1px solid #d4d0c8;
+  background-color: #f3f2f0;
+}

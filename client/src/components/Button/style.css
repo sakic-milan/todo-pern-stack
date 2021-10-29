@@ -1,0 +1,7 @@
+.windowsButton {
+  border: none;
+  background-color: #d4d0c8 !important;
+  box-shadow: 2px 2px 3px 2px rgba(75, 75, 75, 0.89);
+  height: 22px;
+  margin: auto 12px;
+}
