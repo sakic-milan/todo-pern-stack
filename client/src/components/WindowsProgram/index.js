@@ -1,11 +1,13 @@
-import React from "react";
 import "./WindowsProgram.css";
 
-const WindowsProgram = (props) => {
+const WindowsProgram = ({ children }) => {
   return (
     <div className="windowWrapper">
-      <div className="windowHeader"></div>
-      {props.children}
+      <div className="windowHeader">
+        <span>PERN Stack Todo App</span>
+        <span className="closeButton" onClick={() => {}}></span>
+      </div>
+      {children}
     </div>
   );
 };

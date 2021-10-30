@@ -1,0 +1,36 @@
+.modalWrapper {
+  width: 330px;
+  height: 110px;
+  background-color: #d4d0c8;
+  box-shadow: 0px 0px 2px 1px rgba(142, 141, 140, 0.83);
+  position: absolute;
+  top: 40%;
+  left: 48%;
+}
+
+.windowHeader {
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 8px 2px 6px;
+}
+
+.childrenText {
+  margin: 12px;
+}
+
+.closeButton {
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.modalButtons {
+  width: 100%;
+  box-sizing: border-box;
+  position: absolute;
+  right: 4px;
+  bottom: 11px;
+  display: flex;
+  justify-content: flex-end;
+}

@@ -1,19 +1,21 @@
 const addTodo = async (description) => {
   const body = { description };
 
-  await fetch("http://localhost:5000/todos", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
+  try {
+    await fetch("http://localhost:5000/todos", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 const getAllTodos = async () => {
   try {
     const todos = await fetch("http://localhost:5000/todos");
     const allTodos = await todos.json();
-
-    console.log("all todos", allTodos);
 
     return allTodos;
   } catch (error) {
@@ -25,7 +27,8 @@ const getSingleTodo = async (id) => {
   try {
     const todo = await fetch(`http://localhost:5000/todos/${id}`);
     const todoJson = await todo.json();
-    return todo.description;
+
+    return todoJson;
   } catch (error) {
     console.error(error);
   }

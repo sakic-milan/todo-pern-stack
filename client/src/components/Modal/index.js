@@ -1,10 +1,20 @@
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import ReactDOM from "react-dom";
 import Button from "../Button";
 
-import "./style.css";
+import "./Modal.css";
 
-const Modal = ({ isOpen, close, title, text, confirmCallback, children }) => {
+const Modal = ({
+  isOpen,
+  close,
+  title,
+  text,
+  confirmCallback,
+  children,
+  ConfirmButtonText,
+  CancelButtonText,
+  validationError,
+}) => {
   const modalDiv = document.getElementById("modal");
 
   return isOpen
@@ -12,22 +22,25 @@ const Modal = ({ isOpen, close, title, text, confirmCallback, children }) => {
         <div className="modalWrapper">
           <div className="windowHeader">
             <span>{title}</span>
-            <span onClick={close}>x</span>
+            <span className="closeButton" onClick={close}>
+              x
+            </span>
           </div>
+          {validationError && <p className="errorMessage">{validationError}</p>}
 
-          {children}
           <Fragment>
-            {" "}
-            {text}
-            <div>
+            <div className="childrenText">
+              {children}
+              {text}
+            </div>
+            <div className="modalButtons">
               <Button
-                text="Yes"
+                text={ConfirmButtonText ?? "Yes"}
                 onClick={() => {
                   confirmCallback();
-                  close();
                 }}
               />
-              <Button text="No" onClick={close} />
+              <Button text={CancelButtonText ?? "No"} onClick={close} />
             </div>
           </Fragment>
         </div>,

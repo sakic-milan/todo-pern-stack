@@ -1,10 +1,8 @@
-import React from "react";
-import "./style.css";
+import "./Button.css";
 
-const Button = (props) => {
-  const { text, onClick } = props;
+const Button = ({ text, onClick }) => {
   return (
-    <button className="windowsButton" type="button" onClick={onClick}>
+    <button className="windowButton" type="button" onClick={onClick}>
       {text}
     </button>
   );

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import "./App.css";
 import Button from "./components/Button";
 import InputField from "./components/InputField";
 import Todo from "./components/Todo";
 import WindowsProgram from "./components/WindowsProgram";
+import Modal from "./components/Modal";
+
 import {
   addTodo,
   getAllTodos,
@@ -11,70 +12,95 @@ import {
   editTodo,
   getSingleTodo,
 } from "./api/todoUtils";
-import Modal from "./components/Modal";
+
+import "./App.css";
 
 function App() {
-  const [addInput, setAddInput] = useState("");
   const [todos, setTodos] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [crudID, setCrudID] = useState(null);
-  const [renameTodoModal, setRenameTodoModal] = useState(false);
-  const [renameTodoVal, setRenameTodoVal] = useState("");
+  const [addInput, setAddInput] = useState("");
+  const [addValidationError, setAddValidationError] = useState("");
 
-  const handleNameChange = (e) => {
-    setRenameTodoVal(e.target.value);
-  };
+  const [renameId, setRenameId] = useState(null);
+  const [renameTodoValue, setRenameTodoValue] = useState("");
+  const [renameTodoModal, setRenameTodoModal] = useState(false);
+  const [validationError, setValidationError] = useState("");
+
+  const [deleteTodoId, setDeleteTodoId] = useState(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  const errorMessage = "Todo description must be at least 5 chararacters long!";
 
   const handleAddInputChange = (e) => {
     setAddInput(e.target.value);
+    setAddValidationError(false);
   };
 
-  const handleAddTodo = () => {
-    addTodo(addInput).then(() => fetchTodos());
+  const isTodoNameValid = (name) => {
+    return name.length < 5 ? false : true;
+  };
+
+  const handleAddTodo = async (e) => {
+    const isNameValid = isTodoNameValid(addInput);
+
+    if (!isNameValid) {
+      setAddValidationError(errorMessage);
+      return;
+    }
+
+    await addTodo(addInput);
+    await fetchTodos();
     setAddInput("");
   };
 
-  const renameTodo = (description) => {
-    editTodo(crudID, description).then(() => fetchTodos());
-  };
-
   const handleRename = async (id) => {
+    const res = await getSingleTodo(id);
+
+    console.log(res);
+
     setRenameTodoModal(true);
-
-    const desc = todos.filter((todo) => (todo.todo_id = id));
-    setRenameTodoVal(desc);
-
-    setRenameTodoVal("Hello");
-    console.log(desc);
-
-    // const description = await getSingleTodo();
-    // setRenameTodoVal(description);
-    setCrudID(id);
+    setRenameId(id);
+    setRenameTodoValue(res.description);
   };
 
-  const fetchTodos = () => {
-    getAllTodos().then((res) => {
-      setTodos(res);
-    });
+  const renameTodo = async () => {
+    const isNameValid = isTodoNameValid(renameTodoValue);
+
+    if (!isNameValid) {
+      setValidationError(errorMessage);
+      return;
+    }
+
+    await editTodo(renameId, renameTodoValue);
+    await fetchTodos();
+    setRenameId(null);
+    setRenameTodoModal(false);
+  };
+
+  const handleDelete = (id) => {
+    setIsDeleteModalOpen(true);
+    setDeleteTodoId(id);
+  };
+
+  const deleteTodoItem = async () => {
+    await deleteTodo(deleteTodoId);
+    await fetchTodos();
+    setDeleteTodoId(null);
+    setIsDeleteModalOpen(false);
+  };
+
+  const fetchTodos = async () => {
+    const todos = await getAllTodos();
+    setTodos(todos);
   };
 
   useEffect(() => {
     fetchTodos();
   }, []);
 
-  const handleDelete = (id) => {
-    setIsModalOpen(true);
-    setCrudID(id);
-  };
-
-  // const delete = () => {
-  //   deleteTodo(crudID);
-  //   fetchTodos();
-  // };
-
   return (
     <div className="App">
       <WindowsProgram>
+        <p className="errorMessage">{addValidationError}</p>
         <InputField value={addInput} handleChange={handleAddInputChange} />
         <Button text="Add todo" onClick={handleAddTodo} />
 
@@ -92,19 +118,33 @@ function App() {
       <Modal
         title="Confirm Todo Delete"
         text="Are you sure you want to delete todo item?"
-        isOpen={isModalOpen}
-        close={() => setIsModalOpen(false)}
-        confirmCallback={() => {
-          deleteTodo(crudID).then(() => fetchTodos());
+        isOpen={isDeleteModalOpen}
+        close={() => {
+          setIsDeleteModalOpen(false);
+          setDeleteTodoId(null);
         }}
+        confirmCallback={deleteTodoItem}
       />
       <Modal
         title="Rename Todo Item"
         isOpen={renameTodoModal}
-        close={() => setRenameTodoModal(false)}
-        confirmCallback={() => renameTodo(renameTodoVal)}
+        ConfirmButtonText="Save"
+        CancelButtonText="Cancel"
+        close={() => {
+          setRenameTodoModal(false);
+          setRenameId(null);
+          setRenameTodoValue("");
+        }}
+        confirmCallback={renameTodo}
+        validationError={validationError}
       >
-        <InputField value={renameTodoVal} handleChange={handleNameChange} />
+        <InputField
+          value={renameTodoValue}
+          handleChange={(e) => {
+            setRenameTodoValue(e.target.value);
+            setValidationError(null);
+          }}
+        />
       </Modal>
     </div>
   );

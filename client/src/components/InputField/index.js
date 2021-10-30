@@ -1,9 +1,6 @@
-import React from "react";
-import "./style.css";
+import "./InputField.css";
 
-const InputField = (props) => {
-  const { value, handleChange } = props;
-
+const InputField = ({ value, handleChange }) => {
   return <input className="inputField" value={value} onChange={handleChange} />;
 };
 

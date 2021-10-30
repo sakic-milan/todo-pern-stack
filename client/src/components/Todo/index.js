@@ -1,10 +1,9 @@
-import React from "react";
-import "./style.css";
+import "./Todo.css";
 
 const Todo = ({ todo, handleDelete, handleRename }) => {
   return (
     <li className="todoItem">
-      <span contentEditable>{todo.description}</span>
+      <span>{todo.description}</span>
       <div>
         <button
           className="crudButton"
