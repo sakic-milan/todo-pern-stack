@@ -2,7 +2,7 @@ const addTodo = async (description) => {
   const body = { description };
 
   try {
-    await fetch("http://localhost:5000/todos", {
+    await fetch("/todos", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
@@ -14,7 +14,7 @@ const addTodo = async (description) => {
 
 const getAllTodos = async () => {
   try {
-    const todos = await fetch("http://localhost:5000/todos");
+    const todos = await fetch("/todos");
     const allTodos = await todos.json();
 
     return allTodos;
@@ -25,7 +25,7 @@ const getAllTodos = async () => {
 
 const getSingleTodo = async (id) => {
   try {
-    const todo = await fetch(`http://localhost:5000/todos/${id}`);
+    const todo = await fetch(`/todos/${id}`);
     const todoJson = await todo.json();
 
     return todoJson;
@@ -36,7 +36,7 @@ const getSingleTodo = async (id) => {
 
 const deleteTodo = async (todoId) => {
   try {
-    await fetch(`http://localhost:5000/todos/${todoId}`, {
+    await fetch(`/todos/${todoId}`, {
       method: "DELETE",
     });
   } catch (error) {
@@ -47,7 +47,7 @@ const deleteTodo = async (todoId) => {
 const editTodo = async (id, description) => {
   const body = { description };
   try {
-    await fetch(`http://localhost:5000/todos/${id}`, {
+    await fetch(`/todos/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
