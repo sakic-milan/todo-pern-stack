@@ -6,29 +6,3 @@
   margin: 50px auto;
   box-shadow: 0px 0px 2px 1px rgba(142, 141, 140, 0.83);
 }
-
-.windowHeader {
-  height: 22px;
-  background: -moz-linear-gradient(
-    90deg,
-    rgba(11, 37, 106, 1) 0%,
-    rgba(11, 37, 106, 1) 27%,
-    rgba(116, 149, 197, 1) 59%,
-    rgba(164, 200, 238, 1) 93%
-  );
-  background: -webkit-linear-gradient(
-    90deg,
-    rgba(11, 37, 106, 1) 0%,
-    rgba(11, 37, 106, 1) 27%,
-    rgba(116, 149, 197, 1) 59%,
-    rgba(164, 200, 238, 1) 93%
-  );
-  background: linear-gradient(
-    90deg,
-    rgba(11, 37, 106, 1) 0%,
-    rgba(11, 37, 106, 1) 27%,
-    rgba(116, 149, 197, 1) 59%,
-    rgba(164, 200, 238, 1) 93%
-  );
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#0b256a",endColorstr="#a4c8ee",GradientType=1);
-}
