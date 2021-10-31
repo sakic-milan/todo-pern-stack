@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
-const pool = require("./db");
 const path = require("path");
+const pool = require("./db");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -23,36 +23,27 @@ app.post("/todos", async (req, res) => {
     );
 
     res.json(newTodo.rows[0]);
-    //res.end(newTodo);
   } catch (error) {
-    console.log("======== error =========");
-    console.error(error);
-    res.end("fail");
+    res.end();
   }
 });
 
 app.get("/todos", async (req, res) => {
-  console.log("req", req);
   try {
     const allTodos = await pool.query("SELECT * FROM todo");
     res.json(allTodos.rows);
   } catch (error) {
-    console.log("=================  error ===============");
-    console.error(error);
-    res.end("error");
+    res.end();
   }
 });
 
 app.get("/todos/:id", async (req, res) => {
-  console.log(req.params);
   const { id } = req.params;
   try {
     const todo = await pool.query("SELECT * FROM todo WHERE todo_id= $1", [id]);
     res.json(todo.rows[0]);
   } catch (error) {
-    console.log("=================  error ===============");
-    console.error(error);
-    res.end("error");
+    res.end();
   }
 });
 
@@ -67,14 +58,13 @@ app.put("/todos/:id", async (req, res) => {
 
     res.json("todo updated");
   } catch (error) {
-    res.end(error);
+    res.end();
   }
 });
 
 app.delete("/todos/:id", async (req, res) => {
   const { id } = req.params;
 
-  console.log("request", req);
   try {
     const deleted = await pool.query("DELETE FROM todo WHERE todo_id = $1", [
       id,
@@ -82,7 +72,6 @@ app.delete("/todos/:id", async (req, res) => {
 
     res.json(deleted);
   } catch (error) {
-    console.log(error);
     res.end();
   }
 });

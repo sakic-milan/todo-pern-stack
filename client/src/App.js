@@ -13,8 +13,6 @@ import {
   getSingleTodo,
 } from "./api/todoUtils";
 
-import "./App.css";
-
 function App() {
   const [todos, setTodos] = useState([]);
   const [addInput, setAddInput] = useState("");
