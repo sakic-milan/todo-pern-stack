@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 5000;
 
 //process.env.PORT
 //process.env.NODE_ENV => production or undefined
-
+await pool.connect();
 //middleware
 app.use(cors());
 app.use(express.json());
