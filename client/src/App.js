@@ -55,8 +55,6 @@ function App() {
   const handleRename = async (id) => {
     const res = await getSingleTodo(id);
 
-    console.log(res);
-
     setRenameTodoModal(true);
     setRenameId(id);
     setRenameTodoValue(res.description);
@@ -92,8 +90,6 @@ function App() {
     const todos = await getAllTodos();
     setTodos(todos);
   };
-
-  console.log(process.env.PROD_DATABASE_URL);
 
   useEffect(() => {
     fetchTodos();

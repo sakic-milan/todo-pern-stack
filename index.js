@@ -1,14 +1,11 @@
 const express = require("express");
-const app = express();
 const cors = require("cors");
 const pool = require("./db");
 const path = require("path");
+
+const app = express();
 const PORT = process.env.PORT || 5000;
 
-//process.env.PORT
-//process.env.NODE_ENV => production or undefined
-await pool.connect();
-//middleware
 app.use(cors());
 app.use(express.json());
 
@@ -16,11 +13,8 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "client/build")));
 }
 
-//routes
-
 app.post("/todos", async (req, res) => {
   try {
-    console.log(req.body);
     const { description } = req.body;
 
     const newTodo = await pool.query(
