@@ -93,6 +93,8 @@ function App() {
     setTodos(todos);
   };
 
+  console.log("env", process.env.NODE_ENV);
+
   useEffect(() => {
     // fetchTodos();
   }, []);
