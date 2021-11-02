@@ -4,7 +4,7 @@ More informations and demo can be found on [sakicmilan.com](https://www.sakicmil
 
 Demo (video): [Youtube: Simple PostgreSQL, Express, React, Node TODO Application [demo]](https://youtu.be/kVjbPk4mOYc)
 
-**How to run it localy:**
+**How to run it locally:**
 - clone repo
 - install dependencies
 - install postgreSQL
